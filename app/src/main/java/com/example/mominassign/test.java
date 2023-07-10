@@ -1,5 +1,6 @@
 package com.example.mominassign;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -15,7 +16,7 @@ import java.util.Random;
 
 
 public class test extends Fragment {
-
+    MyDbHelper dbManager;
     private TextView letterTextView, answerTextView;
     private char[] skyLetters = {'b', 'd', 'f', 'h', 'k', 'l', 't'};
     private char[] rootLetters = {'g', 'j', 'p', 'q', 'y'};
@@ -41,11 +42,10 @@ public class test extends Fragment {
         skyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (answerString == "Sky Letter") {
-                    answerTextView.setText("Awesome your answer is right");
-                } else {
-                    answerTextView.setText("Incorrect! the answer is " + answerString);
-                }
+
+                dbManager.insertQuestion(letterTextView.getText().toString());
+                dbManager.insertActualAnswer(answerString);
+                dbManager.insertUserAns(skyButton.getText().toString());
 
                 // Wait for 5 seconds and create a new question
                 new Handler().postDelayed(new Runnable() {
@@ -62,11 +62,10 @@ public class test extends Fragment {
         grassButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (answerString == "Grass Letter") {
-                    answerTextView.setText("Awesome your answer is right");
-                } else {
-                    answerTextView.setText("Incorrect! the answer is " + answerString);
-                }
+                dbManager.insertQuestion(letterTextView.getText().toString());
+                dbManager.insertActualAnswer(answerString);
+                dbManager.insertUserAns(grassButton.getText().toString());
+
                 // Wait for 5 seconds and create a new question
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -82,11 +81,10 @@ public class test extends Fragment {
         rootButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (answerString == "Root Letter") {
-                    answerTextView.setText("Awesome your answer is right");
-                } else {
-                    answerTextView.setText("Incorrect! the answer is " + answerString);
-                }
+                dbManager.insertQuestion(letterTextView.getText().toString());
+                dbManager.insertActualAnswer(answerString);
+                dbManager.insertUserAns(rootButton.getText().toString());
+
                 // Wait for 5 seconds and create a new question
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -120,6 +118,16 @@ public class test extends Fragment {
                 break;
         }
         return String.valueOf(letter);
+    }
+
+    public void delay(){
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                letterTextView.setText(getRandomLetter());
+                answerTextView.setText("");
+            }
+        }, 5000); // 5000 milliseconds = 5 seconds
     }
 
 }
