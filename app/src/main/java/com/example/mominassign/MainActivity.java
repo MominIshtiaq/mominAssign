@@ -4,7 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +18,7 @@ import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
+    int flag = 0;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
@@ -41,13 +46,47 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
 
+
                 if(id == R.id.optText){
-                    Intent intent = new Intent(MainActivity.this, MainActivity2.class);
-                    startActivity(intent);
+                    if(flag != 1){
+                        firstFragment(new test(), flag);
+                        flag = 1;
+                    }
+                    else {
+                        loadFragment(new test(), flag);
+                    }
                 }
-                
+
+
                 return true;
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
+        super.onBackPressed();
+    }
+
+    public void loadFragment(Fragment fragment, int flag)
+    {
+        if (flag == 1) {
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.container, fragment);
+            ft.commit();
+        }
+    }
+
+    public void firstFragment(Fragment fragment, int flag){
+        if (flag == 0) {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.add(R.id.container, fragment);
+        ft.commit();
+        }
     }
 }
