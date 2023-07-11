@@ -49,12 +49,14 @@ public class MainActivity extends AppCompatActivity {
 
                 if(id == R.id.optText){
                     if(flag != 1){
-                        firstFragment(new test(), flag);
+                        firstFragment(new test(MainActivity.this), flag);
                         flag = 1;
                     }
                     else {
-                        loadFragment(new test(), flag);
+                        loadFragment(new test(MainActivity.this), flag);
                     }
+                }else if( id == R.id.optResult){
+                    loadFragment(new QuizResult(), 1);
                 }
 
                 drawerLayout.closeDrawer(GravityCompat.START);
@@ -62,9 +64,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
-
-
     }
 
     @Override

@@ -20,8 +20,6 @@ import java.util.Random;
 
 
 public class test extends Fragment {
-    MyDbHelper dbManager;
-    MyDbHelper dBHandler = new MyDbHelper(requireContext());
     Context context;
     private TextView letterTextView, answerTextView;
     private char[] skyLetters = {'b', 'd', 'f', 'h', 'k', 'l', 't'};
@@ -29,6 +27,7 @@ public class test extends Fragment {
     private char[] grassLetters = {'a', 'c', 'e', 'i', 'm', 'n', 'o', 'r', 's', 'u', 'v', 'w', 'x', 'z'};
     private String answerString = "";
     int questionCount;
+    MyDbHelper dBHelper;
 
     public test(Context context) {
         this.context = context;
@@ -38,75 +37,7 @@ public class test extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_test, container, false);
-//
-//        letterTextView = view.findViewById(R.id.letter_text_view);
-//        letterTextView.setText(getRandomLetter());
-//
-//        answerTextView = view.findViewById(R.id.answer_text_view);
-//
-//        Button skyButton = view.findViewById(R.id.sky_button);
-//
-//
-//
-//        skyButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                dbManager.insertQuestion(letterTextView.getText().toString());
-//                dbManager.insertActualAnswer(answerString);
-//                dbManager.insertUserAns(skyButton.getText().toString());
-//
-//                // Wait for 5 seconds and create a new question
-//                new Handler().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        letterTextView.setText(getRandomLetter());
-//                        answerTextView.setText("");
-//                    }
-//                }, 5000); // 5000 milliseconds = 5 seconds
-//            }
-//        });
-//
-//        Button grassButton = view.findViewById(R.id.grass_button);
-//        grassButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                dbManager.insertQuestion(letterTextView.getText().toString());
-//                dbManager.insertActualAnswer(answerString);
-//                dbManager.insertUserAns(grassButton.getText().toString());
-//
-//                // Wait for 5 seconds and create a new question
-//                new Handler().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        letterTextView.setText(getRandomLetter());
-//                        answerTextView.setText("");
-//                    }
-//                }, 5000); // 5000 milliseconds = 5 seconds
-//            }
-//        });
-//
-//        Button rootButton = view.findViewById(R.id.root_button);
-//        rootButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                dbManager.insertQuestion(letterTextView.getText().toString());
-//                dbManager.insertActualAnswer(answerString);
-//                dbManager.insertUserAns(rootButton.getText().toString());
-//
-//                // Wait for 5 seconds and create a new question
-//                new Handler().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        letterTextView.setText(getRandomLetter());
-//                        answerTextView.setText("");
-//                    }
-//                }, 5000); // 5000 milliseconds = 5 seconds
-//            }
-//        });
-
-        return view;
+        return inflater.inflate(R.layout.fragment_test, container, false);
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -118,6 +49,8 @@ public class test extends Fragment {
         Button skyButton = view.findViewById(R.id.sky_button);
         Button grassButton = view.findViewById(R.id.grass_button);
         Button rootButton = view.findViewById(R.id.root_button);
+
+        dBHelper = new MyDbHelper(requireContext());
 
         skyButton.setOnClickListener(v -> checkAnswer("Sky Letter"));
         grassButton.setOnClickListener(v -> checkAnswer("Grass Letter"));
@@ -182,9 +115,9 @@ public class test extends Fragment {
 
     private void insertQuestionScore(String q, String a1, String a2) {
         // databaseHelper.deleteAllQuizResults();
-        dBHandler.insertQuestion(q);
-        dBHandler.insertActualAnswer(a1);
-        dBHandler.insertUserAns(a2);
+        dBHelper.insertQuestion(q);
+        dBHelper.insertActualAnswer(a1);
+        dBHelper.insertUserAns(a2);
     }
 
     private void finishQuiz() {
@@ -193,8 +126,6 @@ public class test extends Fragment {
 
         // Start the MainActivity
         Intent intent = new Intent(requireContext(), MainActivity.class);
-
-        dBHandler.removeAllEntriesFromTable();
         startActivity(intent);
 
         // Finish the current activity (QuizActivity)
@@ -206,7 +137,7 @@ public class test extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        dBHandler.close();
+        dBHelper.close();
     }
 
     private String getRandomLetter() {

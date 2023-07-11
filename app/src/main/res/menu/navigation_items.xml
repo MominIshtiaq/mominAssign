@@ -5,4 +5,9 @@
         android:id="@+id/optText"
         android:title="Text"
         android:icon="@drawable/baseline_notes_24"/>
+
+    <item
+        android:id="@+id/optResult"
+        android:title="Result"
+        android:icon="@drawable/baseline_nordic_walking_24"/>
 </menu>
