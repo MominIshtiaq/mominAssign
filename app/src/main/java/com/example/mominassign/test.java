@@ -182,9 +182,9 @@ public class test extends Fragment {
 
     private void insertQuestionScore(String q, String a1, String a2) {
         // databaseHelper.deleteAllQuizResults();
-        dbHandler.insertQuestion(q);
-        dbHandler.insertActualAnswer(a1);
-        dbHandler.insertUserAns(a2);
+        dBHandler.insertQuestion(q);
+        dBHandler.insertActualAnswer(a1);
+        dBHandler.insertUserAns(a2);
     }
 
     private void finishQuiz() {
@@ -194,7 +194,7 @@ public class test extends Fragment {
         // Start the MainActivity
         Intent intent = new Intent(requireContext(), MainActivity.class);
 
-        dbHandler.removeAllEntriesFromTable();
+        dBHandler.removeAllEntriesFromTable();
         startActivity(intent);
 
         // Finish the current activity (QuizActivity)
@@ -229,37 +229,4 @@ public class test extends Fragment {
         }
         return String.valueOf(letter);
     }
-}
-
-    private String getRandomLetter() {
-        Random random = new Random();
-        int category = random.nextInt(3);
-        char letter;
-        switch (category) {
-            case 0:
-                letter = skyLetters[random.nextInt(skyLetters.length)];
-                answerString = "Sky Letter";
-                break;
-            case 1:
-                letter = grassLetters[random.nextInt(grassLetters.length)];
-                answerString = "Grass Letter";
-                break;
-            default:
-                letter = rootLetters[random.nextInt(rootLetters.length)];
-                answerString = "Root Letter";
-                break;
-        }
-        return String.valueOf(letter);
-    }
-
-    public void delay(){
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                letterTextView.setText(getRandomLetter());
-                answerTextView.setText("");
-            }
-        }, 5000); // 5000 milliseconds = 5 seconds
-    }
-
 }
