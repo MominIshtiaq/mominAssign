@@ -1,10 +1,10 @@
 package com.example.mominassign;
 
 public class Questions {
-    public static int id;
-    public static String question;
-    public static String correct_answer;
-    public static String user_answer;
+    public int id;
+    public String question;
+    public String correct_answer;
+    public String user_answer;
 
     public Questions(int id, String question, String correct_answer, String user_answer){
         this.id = id;
@@ -13,17 +13,17 @@ public class Questions {
         this.user_answer = user_answer;
     }
 
-    public static void setId(int ia){
+    public void setId(int ia){
         id = ia;
     }
-    public static int getId(){
+    public int getId(){
         return id;
     }
 
-    public static void setQuestion(String ques){
+    public void setQuestion(String ques){
         question = ques;
     }
-    public static String getQuestion(){
+    public String getQuestion(){
         return question;
     }
 
