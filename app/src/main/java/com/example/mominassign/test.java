@@ -115,9 +115,10 @@ public class test extends Fragment {
 
     private void insertQuestionScore(String q, String a1, String a2) {
         // databaseHelper.deleteAllQuizResults();
-        dBHelper.insertQuestion(q);
-        dBHelper.insertActualAnswer(a1);
-        dBHelper.insertUserAns(a2);
+//        dBHelper.insertQuestion(q);
+//        dBHelper.insertActualAnswer(a1);
+//        dBHelper.insertUserAns(a2);
+        dBHelper.insertEverything(q,a1,a2);
     }
 
     private void finishQuiz() {
@@ -138,26 +139,5 @@ public class test extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         dBHelper.close();
-    }
-
-    private String getRandomLetter() {
-        Random random = new Random();
-        int category = random.nextInt(3);
-        char letter;
-        switch (category) {
-            case 0:
-                letter = skyLetters[random.nextInt(skyLetters.length)];
-                answerString = "Sky Letter";
-                break;
-            case 1:
-                letter = grassLetters[random.nextInt(grassLetters.length)];
-                answerString = "Grass Letter";
-                break;
-            default:
-                letter = rootLetters[random.nextInt(rootLetters.length)];
-                answerString = "Root Letter";
-                break;
-        }
-        return String.valueOf(letter);
     }
 }

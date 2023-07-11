@@ -75,6 +75,23 @@ public class MyDbHelper extends SQLiteOpenHelper {
         return chk;
     }
 
+    public boolean insertEverything(String question, String cAns, String yAns){
+        boolean chk = false;
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_QUESTION, question);
+        values.put(COLUMN_ANSWER_CORRECT, cAns);
+        values.put(COLUMN_ANSWER_ENTERED, yAns);
+
+        long newRowId = db.insert(TABLE_NAME, null, values);
+        if (newRowId != -1) {
+            // Insertion successful
+            chk = true;
+        }
+        return chk;
+    }
+
     public boolean insertActualAnswer(String answer){
         boolean chk = false;
         SQLiteDatabase db = this.getWritableDatabase();
