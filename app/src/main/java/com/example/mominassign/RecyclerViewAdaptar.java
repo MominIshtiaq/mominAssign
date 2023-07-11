@@ -32,13 +32,13 @@ public class RecyclerViewAdaptar extends RecyclerView.Adapter<RecyclerViewAdapta
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-//        Questions quizResult = quizResults.get(position);
-//        holder.bind(quizResult);
+        Questions quizResult = quizResults.get(position);
+        holder.bind(quizResult);
 
-        holder.data=quizResults.get(position);
-        holder.question.setText(holder.data.getQuestion());
-        holder.cAns.setText(String.valueOf(holder.data.getCorrectAnswer()));
-        holder.yAns.setText(holder.data.getUserAnswer());
+//        holder.data=quizResults.get(position);
+//        holder.question.setText(holder.data.getQuestion());
+//        holder.cAns.setText(String.valueOf(holder.data.getCorrectAnswer()));
+//        holder.yAns.setText(holder.data.getUserAnswer());
     }
 
     @Override
@@ -48,7 +48,7 @@ public class RecyclerViewAdaptar extends RecyclerView.Adapter<RecyclerViewAdapta
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView question, cAns, yAns;
+        private final TextView question, cAns, yAns, score;
         Questions data;
 
         public ViewHolder(@NonNull View itemView) {
@@ -56,7 +56,11 @@ public class RecyclerViewAdaptar extends RecyclerView.Adapter<RecyclerViewAdapta
             question = itemView.findViewById(R.id.question);
             cAns = itemView.findViewById(R.id.correctans);
             yAns = itemView.findViewById(R.id.yourans);
+            score = itemView.findViewById(R.id.score1);
         }
 
+        public void bind(Questions quizResult) {
+
+        }
     }
 }
